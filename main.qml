@@ -94,7 +94,19 @@ ApplicationWindow {
            target: tableViewLoader.item
            ignoreUnknownSignals:true
            onStopTask:{
-               console.log(value)
+               interactionClass.stopTask(value)
+           }
+           onContinueTask:{
+               interactionClass.continueTask(value)
+           }
+           onStopTimer:{
+               interactionClass.stopTimer()
+           }
+           onContinueTimer:{
+               interactionClass.continueTimer()
+           }
+           onDeleteTask:{
+               interactionClass.deleteTask(value)
            }
        }
 
@@ -114,6 +126,7 @@ ApplicationWindow {
                    var jsonObj=JSON.parse(array[i])
                    tableViewLoader.item.myModel.append({"fileNameText":jsonObj.fileNameText,"totalSizeText":jsonObj.totalSizeText,"speedText":jsonObj.speedText,"platformText":jsonObj.platformText,"statusText":jsonObj.statusText})
                }
+               tableViewLoader.item.tableViewUpdate()
            }
        }
        Component{

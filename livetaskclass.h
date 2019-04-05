@@ -18,6 +18,7 @@ public:
     void setFileName(QString);
     void setFilePath(QString);
     void setPlatform(QString);
+    void setStopMark(bool);
     virtual  void Start()=0;
     protected:
     QString fileName="";

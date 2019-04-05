@@ -2,7 +2,7 @@
 #include "bilibilitaskclass.h"
 InteractionClass::InteractionClass(QObject *parent) : QObject(parent)
 {
-    QTimer *timer=new QTimer();
+    timer=new QTimer();
     connect(timer,&QTimer::timeout,this,&InteractionClass::UpData);
     timer->setInterval(1000);
     timer->start();
@@ -29,6 +29,57 @@ void InteractionClass::addTask(const QString &value)
 
 }
 
+void InteractionClass::stopTask(const QString &value)
+{
+    for (int i=0;i<liveTaskList.length();++i)
+    {
+
+        if(liveTaskList.at(i)->getFileName()==value)
+        {
+            if(liveTaskList.at(i)->getPlatform()=="bilibili")
+            {
+                liveTaskList.at(i)->setStopMark(true);
+            }
+        }
+    }
+}
+
+void InteractionClass::continueTask(const QString &value)
+{
+    for (int i=0;i<liveTaskList.length();++i)
+    {
+        if(liveTaskList.at(i)->getFileName()==value)
+        {
+            if(liveTaskList.at(i)->getPlatform()=="bilibili")
+            {
+                liveTaskList.at(i)->setStopMark(false);
+                liveTaskList.at(i)->Start();
+            }
+        }
+    }
+}
+
+void InteractionClass::deleteTask(const QString &value)
+{
+    for (int i=0;i<liveTaskList.length();++i) {
+        if(liveTaskList.at(i)->getFileName()==value)
+        {
+            liveTaskList.at(i)->setStopMark(true);
+            delete  liveTaskList.takeAt(i);
+        }
+    }
+}
+
+void InteractionClass::stopTimer()
+{
+    timer->stop();
+}
+
+void InteractionClass::continueTimer()
+{
+    timer->start();
+}
+
 void InteractionClass::UpData()
 {
     if(liveTaskList.length()>0)
@@ -48,7 +99,7 @@ void InteractionClass::UpData()
             array.append(QString(d.toJson()));
         }
         text=QJsonDocument(array).toJson();
-        qDebug()<<text;
+        //qDebug()<<text;
         emit slot_upData(text);
     }
 }

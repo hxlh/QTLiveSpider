@@ -20,6 +20,10 @@ void LiveTaskClass::setPlatform(QString value)
 {
     platform=value;
 }
+void LiveTaskClass::setStopMark(bool value)
+{
+    stopMark=value;
+}
 QString LiveTaskClass::getFileName()
 {
     return fileName;
