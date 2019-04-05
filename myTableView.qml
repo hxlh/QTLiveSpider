@@ -5,6 +5,7 @@ Item
 {
     property alias myModel: myModel
     property int tableViewIndex: -1
+    signal stopTask(string value);
     anchors.fill: parent
     ListModel{
         id:myModel
@@ -71,11 +72,54 @@ Item
         height: parent.height-35
         width: parent.width
         anchors.top:head.bottom
-        model: myModel
-        delegate: myDele
-    }
-    Component {
-        id:myDele
+        model: ListModel{
+            ListElement{
+                fileNameText:"1111"
+                totalSizeText:"1111"
+                statusText:"1111"
+                speedText:"1111"
+                platformText:"11111"
+
+            }
+            ListElement{
+                fileNameText:"2222"
+                totalSizeText:"2222"
+                statusText:"2222"
+                speedText:"2222"
+                platformText:"2222"
+
+            }
+            ListElement{
+                fileNameText:"3333"
+                totalSizeText:"3333"
+                statusText:"3333"
+                speedText:"3333"
+                platformText:"3333"
+
+            }
+            ListElement{
+                fileNameText:"4444"
+                totalSizeText:"4444"
+                statusText:"4444"
+                speedText:"4444"
+                platformText:"4444"
+
+            }
+            ListElement{
+                fileNameText:"5555"
+                totalSizeText:"5555"
+                statusText:"5555"
+                speedText:"5555"
+                platformText:"5555"
+
+            }
+        }
+
+        delegate:
+            Component {
+            Rectangle{
+                height: 25
+                width: parent.width
                 Row{
                     height: 25
                     width: parent.width
@@ -206,15 +250,17 @@ Item
                         id: contentMenu
 
                         MenuItem {
-                            text: "Cut"
-                            shortcut: "Ctrl+X"
-                            onTriggered: {console.log("Cut")}
+                            text: "暂停任务"
+                            onTriggered:
+                            {
+                                emit:stopTask(fileName.text)
+                            }
                         }
 
                         MenuItem {
-                            text: "Copy"
+                            text: "继续任务"
                             shortcut: "Ctrl+C"
-                            onTriggered: {console.log("Copy")}
+                            onTriggered: {}
                         }
 
                         MenuItem {
@@ -223,7 +269,12 @@ Item
                             onTriggered: {console.log("Paste")}
                         }
                 }
+
             }
+
+        }
+
+    }
 
 
 }

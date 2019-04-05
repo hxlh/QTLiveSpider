@@ -90,6 +90,14 @@ ApplicationWindow {
            source: "myTableView.qml"
 
        }
+       Connections{
+           target: tableViewLoader.item
+           ignoreUnknownSignals:true
+           onStopTask:{
+               console.log(value)
+           }
+       }
+
        Loader{
            id:dialogLoader
            anchors.top:title.bottom
