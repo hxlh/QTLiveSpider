@@ -114,7 +114,7 @@ Item
 
             }
         }
-
+//
         delegate:
             Component {
             Rectangle{
