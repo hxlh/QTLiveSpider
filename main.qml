@@ -67,18 +67,27 @@ ApplicationWindow {
                onClicked: mainWindow.showMinimized()
 
            }
-          Button
-          {
+          Rectangle{
               id:addTaskButton
               x:parent.width/2-100
               width:200
               height: 35
-              text:qsTr("添加任务")
-              font.pointSize: 15
-              onClicked: {
-
-                  dialogLoader.sourceComponent=myDialog
+              color: "#CBBBA1"
+              radius: 10
+              Text {
+                  font.pointSize: 15
+                  anchors.centerIn: parent
+                  text: qsTr("添加任务")
               }
+              MouseArea{
+                  anchors.fill: parent
+                  onClicked: {
+                      dialogLoader.sourceComponent=myDialog
+                  }
+                  onPressed: addTaskButton.color="#B4A68F"
+                  onReleased: addTaskButton.color="#CBBBA1"
+              }
+
           }
        }
 

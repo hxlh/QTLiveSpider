@@ -46,7 +46,7 @@ Item
             height: parent.height
             Text {
                 anchors.centerIn: parent
-                text: qsTr("进度")
+                text: qsTr("状态")
                 font.pointSize: 12
             }
         }

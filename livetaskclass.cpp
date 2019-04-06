@@ -24,6 +24,10 @@ void LiveTaskClass::setStopMark(bool value)
 {
     stopMark=value;
 }
+void LiveTaskClass::setStatus(QString value)
+{
+    status=value;
+}
 QString LiveTaskClass::getFileName()
 {
     return fileName;
@@ -71,4 +75,8 @@ QString LiveTaskClass::getTotalData()
 QString LiveTaskClass::getPlatform()
 {
     return platform;
+}
+QString LiveTaskClass::getStatus()
+{
+    return status;
 }

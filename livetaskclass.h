@@ -14,14 +14,17 @@ public:
     QString getDownSpeed();
     QString getTotalData();
     QString getPlatform();
+    QString getStatus();
     void setUrl(QString);
     void setFileName(QString);
     void setFilePath(QString);
     void setPlatform(QString);
     void setStopMark(bool);
+    void setStatus(QString);
     virtual  void Start()=0;
     protected:
     QString fileName="";
+    QString status="";
     QString filePath="";
     QString platform="";
     QString downSpeed="";

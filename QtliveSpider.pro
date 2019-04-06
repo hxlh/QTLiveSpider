@@ -16,7 +16,8 @@ SOURCES += \
         main.cpp \
     interactionclass.cpp \
     livetaskclass.cpp \
-    bilibilitaskclass.cpp
+    bilibilitaskclass.cpp \
+    huyataskclass.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,4 +35,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     interactionclass.h \
     livetaskclass.h \
-    bilibilitaskclass.h
+    bilibilitaskclass.h \
+    huyataskclass.h

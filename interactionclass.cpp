@@ -1,5 +1,6 @@
 ﻿#include "interactionclass.h"
 #include "bilibilitaskclass.h"
+#include "huyataskclass.h"
 InteractionClass::InteractionClass(QObject *parent) : QObject(parent)
 {
     timer=new QTimer();
@@ -23,8 +24,20 @@ void InteractionClass::addTask(const QString &value)
        bilibili->setFilePath(filePath);
        bilibili->setUrl(url);
        bilibili->setPlatform("bilibili");
+       bilibili->setStatus("正在录播");
        bilibili->getLiveUrl();
        bilibili->Start();
+   }
+   else if(url.contains("huya"))
+   {
+       HuyaTaskClass *huya=new HuyaTaskClass();
+       liveTaskList.append(huya);
+       huya->setFileName(fileName);
+       huya->setFilePath(filePath);
+       huya->setUrl(url);
+       huya->setStatus("正在录播");
+       huya->setPlatform("虎牙直播");
+       huya->Start();
    }
 
 }
@@ -36,8 +49,10 @@ void InteractionClass::stopTask(const QString &value)
 
         if(liveTaskList.at(i)->getFileName()==value)
         {
-            if(liveTaskList.at(i)->getPlatform()=="bilibili")
+            QString platform=liveTaskList.at(i)->getPlatform();
+            if(platform=="bilibili"||platform=="huya")
             {
+                liveTaskList.at(i)->setStatus("暂停");
                 liveTaskList.at(i)->setStopMark(true);
             }
         }
@@ -50,8 +65,10 @@ void InteractionClass::continueTask(const QString &value)
     {
         if(liveTaskList.at(i)->getFileName()==value)
         {
-            if(liveTaskList.at(i)->getPlatform()=="bilibili")
+            QString platform=liveTaskList.at(i)->getPlatform();
+            if(platform=="bilibili"||platform=="huya")
             {
+                liveTaskList.at(i)->setStatus("正在录播");
                 liveTaskList.at(i)->setStopMark(false);
                 liveTaskList.at(i)->Start();
             }
@@ -93,7 +110,7 @@ void InteractionClass::UpData()
             jb.insert("totalSizeText",liveTaskList.at(i)->getTotalData());
             jb.insert("speedText",liveTaskList.at(i)->getDownSpeed());
             jb.insert("platformText",liveTaskList.at(i)->getPlatform());
-            jb.insert("statusText","ok");
+            jb.insert("statusText",liveTaskList.at(i)->getStatus());
             QJsonDocument d;
             d.setObject(jb);
             array.append(QString(d.toJson()));
