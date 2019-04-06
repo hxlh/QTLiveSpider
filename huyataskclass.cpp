@@ -12,9 +12,11 @@ void HuyaTaskClass::Start()
     reply=manager.get(req);//因之前已delete reply 所以要先赋值给reply再进行connect
     connect(reply,&QNetworkReply::readyRead,this,&HuyaTaskClass::slotSaveFile);
     connect(reply,&QNetworkReply::finished,this,&HuyaTaskClass::slotDownFinished);
-    file=new QFile(filePath+"/"+fileName+".live");
-    file->open(QIODevice::WriteOnly |QIODevice::Append);
-
+    QString temp=filePath+"/"+fileName+".live";
+    file=new QFile(temp);//创建文件
+    FILE *pf=fopen(temp.toLocal8Bit().data(),"ab+");//filePath+"/"+fileName+".live"
+    file->open(pf,QIODevice::WriteOnly |QIODevice::Append,QFileDevice::AutoCloseHandle);
+    //使用C语言file指针打开文件,因为QFile.close()只是刷新缓冲区并不会关闭系统底层file句柄，使用File*的方式可以及时关闭(好像没用)
 }
 QString HuyaTaskClass::getLiveUrl()
 {
@@ -54,13 +56,13 @@ void HuyaTaskClass::slotSaveFile()
     file->write(data);
     if(stopMark)
     {
+        file->close();
+        delete file;
+        file=nullptr;
         disconnect(reply,&QNetworkReply::readyRead,this,&HuyaTaskClass::slotSaveFile);
         disconnect(reply,&QNetworkReply::finished,this,&HuyaTaskClass::slotDownFinished);
         delete reply;
         reply=nullptr;
-        file->close();
-        delete file;
-        file=nullptr;
     }
 }
 

@@ -223,6 +223,10 @@ Item
                             {
                                 tableViewIndex=-1
                                 emit:deleteTask(fileName.text)
+                                if(myModel.count==1)
+                                {
+                                    myModel.clear()
+                                }//进行最后清尾，没有这条最后会卡着一条数据
                                 console.log(fileName.text)
                                 emit:continueTimer()
                             }

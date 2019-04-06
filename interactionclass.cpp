@@ -36,7 +36,7 @@ void InteractionClass::addTask(const QString &value)
        huya->setFilePath(filePath);
        huya->setUrl(url);
        huya->setStatus("正在录播");
-       huya->setPlatform("虎牙直播");
+       huya->setPlatform("huya");
        huya->Start();
    }
 
@@ -81,8 +81,10 @@ void InteractionClass::deleteTask(const QString &value)
     for (int i=0;i<liveTaskList.length();++i) {
         if(liveTaskList.at(i)->getFileName()==value)
         {
-            liveTaskList.at(i)->setStopMark(true);
-            delete  liveTaskList.takeAt(i);
+            LiveTaskClass* temp=liveTaskList.takeAt(i);
+            temp->setStopMark(true);
+            liveTaskList.removeOne(temp);
+            temp->destroyed();
         }
     }
 }
